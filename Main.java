@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         //instaniate arrayList of Strings with the fileNames of the students
-        System.out.println("Test change thingie");
         Student bean = new Student("Cannibalistic Chicken");
         try {
             bean.importCoursesFromFile("saveFile.txt");
