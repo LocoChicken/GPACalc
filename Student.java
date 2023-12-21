@@ -217,6 +217,9 @@ public class Student {
         double earnedCredits = this.getWeightedGrade();
         double possibleCredits = this.getTotalCreditHours();
         GPA = earnedCredits / possibleCredits;
+        if (GPA > 4.00) {
+            GPA = 4.00;
+        }
         return GPA;
     }
     public String judgment(double GPA) {
