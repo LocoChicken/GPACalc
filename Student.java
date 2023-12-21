@@ -16,7 +16,15 @@ public class Student {
         this.studentName = name;
         this.courseList = new ArrayList<Course>();
     }
-
+    public String getStudentName() {
+        return this.studentName;
+    }
+    public void setStudentName(String name) {
+        this.studentName = name;
+    }
+    public ArrayList<Course> getStudentCourses() {
+        return this.courseList;
+    }
     public void addCourse() {
         //when called on a student object, this method should prompt for the course info
         //then it should add it to the student's courseList
@@ -24,7 +32,7 @@ public class Student {
         double creditCount = 0;
         double courseGrade = 0.00;
         Scanner courseAdder = new Scanner(System.in);
-        System.out.print("Enter the name of the course: ");
+        System.out.print("Enter the name of the course to add: ");
         String courseName = courseAdder.next();
         if (courseExists(courseName)) {
             System.out.println("Course already exists!");
@@ -77,7 +85,7 @@ public class Student {
         this.printCourseList();
         Scanner courseRemover = new Scanner(System.in);
         //could tell user to type name of course to remove or tell them to choose a number
-        System.out.print("Type a course name from the list: ");
+        System.out.print("Type a course name to remove: ");
         String choice = courseRemover.nextLine();
         if (this.courseExists(choice)) {
             Course courseToRemove = getCourseByName(choice);
@@ -161,13 +169,6 @@ public class Student {
         return found;
     }
     public void printCoursesToFile(String fileName) throws FileNotFoundException {
-        //check if file exists, if it does, override the contents
-        //if it doesnt, create new file
-        
-        //shouldn't need to check if courseList is valid bc that is already checked
-        //visit each arraylist element
-            //add the values of the object
-            //go to next line
         PrintWriter fileWriter = new PrintWriter(fileName);
         for (int i = 0; i < this.courseList.size(); i++) {
             Course currentCourse = this.courseList.get(i);
@@ -264,38 +265,5 @@ public class Student {
         this.courseList.clear();
         this.numCourses = 0;
         this.numCredits = 0;
-    }
-    public void quickSortFML() {
-        quicksortHelperFML(0, this.courseList.size() - 1);
-    }
-    private int partition(int startIndex, int endIndex) {
-        //returns partition index
-        Course pivotCourse = this.courseList.get(endIndex);
-        String pivotValue = pivotCourse.getCourseName();
-        int savedIndex = 0;
-        for (int currentIndex = 0; currentIndex < endIndex; currentIndex++) {
-            Course currentCourse = this.courseList.get(currentIndex);
-            String currentName = currentCourse.getCourseName();
-            if (currentName.compareTo(pivotValue) <= 0) {
-                this.swap(currentIndex, savedIndex);
-                savedIndex++;
-            }
-        }
-        swap(endIndex, savedIndex);
-        return savedIndex;
-    }
-    private void quicksortHelperFML(int startIndex, int endIndex) {
-        if (startIndex >= endIndex) {
-            return;
-        }
-        int partitionIndex = this.partition(startIndex, endIndex);
-
-        this.quicksortHelperFML(startIndex, partitionIndex - 1);
-        this.quicksortHelperFML(partitionIndex + 1, endIndex);
-    }
-    private void swap(int index1, int index2) {
-        Course temp = this.courseList.get(index1);
-        this.courseList.set(index1, this.courseList.get(index2));
-        this.courseList.set(index2, temp);
     }
 }
