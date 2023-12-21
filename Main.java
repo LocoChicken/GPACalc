@@ -3,8 +3,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
+        //instaniate arrayList of Strings with the fileNames of the students
         Student bean = new Student("Cannibalistic Chicken");
         try {
+            bean.importCoursesFromFile("saveFile.txt");
             printMainMenu(bean);
             getUserChoice(bean);
         }
@@ -24,7 +26,6 @@ public class Main {
         System.out.println("7. Calculate GPA");
         System.out.println("8. Input notes");
         System.out.println("9. Clear data");
-        System.out.println("10. Sort");
         System.out.println();
     }
     public static void getUserChoice(Student currentStudent) throws FileNotFoundException {
@@ -58,6 +59,7 @@ public class Main {
         else if (userChoice == 2) {
             currentStudent.removeCourse();
             getUserChoice(currentStudent);
+            System.out.println("Choose a course to remove: ");
             System.out.println();
         }
         else if (userChoice == 3) {
@@ -120,13 +122,8 @@ public class Main {
             getUserChoice(currentStudent);
             System.out.println();
         }
-        else if (userChoice == 10) {
-            System.out.println("Sorted!");
-            currentStudent.quickSortFML();
-            getUserChoice(currentStudent);
-            System.out.println();
-        }
         else if (userChoice == 0) {
+            currentStudent.printCoursesToFile("saveFile.txt");
             System.out.println("Exited programme!");
         }
         else {
