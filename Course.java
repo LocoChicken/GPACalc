@@ -1,5 +1,4 @@
 public class Course {
-    //instance variables
     public final double A_Plus = 4.33;
     public final double A = 4.00;
     public final double A_Minus = 3.67;
@@ -14,7 +13,7 @@ public class Course {
 
     private String courseName = "";
     private double numCredits = 0;
-    private double courseGrade = 0;//0 - 4.33
+    private double courseGrade = 0;
 
     public Course(String name, double credits, double grade) {
         this.courseName = name;
@@ -22,7 +21,6 @@ public class Course {
         this.courseGrade = grade;
     }
 
-    //methods
     public void printCourseInfo() {
         System.out.println("Course name: " + this.getCourseName());
         System.out.println("Course credit count: " + this.getCourseCredits());
@@ -46,12 +44,4 @@ public class Course {
     public void setCourseGrade(double courseGrade) {
         this.courseGrade = courseGrade;
     }
-    //editCourse takes nothing, returns nothing
-        //calls show course list (numbered)
-        //prompts user to choose a course to edit by choosing a number
-        //asks what the user would like to edit
-        //edits that thing
-        //asks if anything else
-            //if yes, go back to courseMenu
-            //if no, go back to main menu
 }

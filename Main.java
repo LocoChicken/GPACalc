@@ -3,7 +3,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        //instaniate arrayList of Strings with the fileNames of the students
         Student bean = new Student("Cannibalistic Chicken");
         try {
             bean.importCoursesFromFile("saveFile.txt");
@@ -45,7 +44,6 @@ public class Main {
             }
         }
     }
-    //get choice method
     public static void choiceHandler(Student currentStudent, int userChoice) throws FileNotFoundException {
         if (userChoice == 1)  {
             currentStudent.addCourse();

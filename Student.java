@@ -26,9 +26,6 @@ public class Student {
         return this.courseList;
     }
     public void addCourse() {
-        //when called on a student object, this method should prompt for the course info
-        //then it should add it to the student's courseList
-        //create the course
         double creditCount = 0;
         double courseGrade = 0.00;
         Scanner courseAdder = new Scanner(System.in);
@@ -81,10 +78,8 @@ public class Student {
         System.out.println();
     }
     public void removeCourse() {
-        //show course list then...
         this.printCourseList();
         Scanner courseRemover = new Scanner(System.in);
-        //could tell user to type name of course to remove or tell them to choose a number
         System.out.print("Type a course name to remove: ");
         String choice = courseRemover.nextLine();
         if (this.courseExists(choice)) {
@@ -100,9 +95,7 @@ public class Student {
         Scanner courseEditor = new Scanner(System.in);
         System.out.print("Choose a course to edit by name: ");
         String choice = courseEditor.next();
-        //edit if it exists
         if (this.courseExists(choice)) {
-            //edit course if it exists
             Course courseToEdit = this.getCourseByName(choice);
             System.out.print("Enter a name: ");
             String newName = courseEditor.next();
@@ -120,7 +113,6 @@ public class Student {
         }
     }
     public void printCourseList() {
-        //maybe make into a list
         int itemNumber = 1;
         System.out.println("---------" + this.studentName + "'s Course List---------");
         if (this.courseList.size() == 0) {
@@ -129,7 +121,6 @@ public class Student {
         System.out.println("Number of courses: " + this.numCourses);
         System.out.println("Number of credits: " + this.numCredits);
         for (int i = 0; i < this.courseList.size(); i++) {
-            //call printCourseInfo on each element
             System.out.println("Item number " + itemNumber);
             this.courseList.get(i).printCourseInfo();
             itemNumber++;
@@ -139,7 +130,7 @@ public class Student {
     public int getCourseNumber() {
         return this.numCourses;
     }
-    public Course getCourseByName(String name) {//only call this if course exists
+    public Course getCourseByName(String name) {
         boolean found = false;
         int currentIndex = 0;
         Course currentCourse = null;
@@ -180,15 +171,9 @@ public class Student {
         System.out.println("Courses added to file!");
     }
     public void importCoursesFromFile(String fileName) throws FileNotFoundException {
-        //check if file exists
         try (Scanner fileReader = new Scanner(new FileInputStream(fileName))) {
             while (fileReader.hasNextLine()) {
-                //check each line individually for a string, double, double
-                    //run addCourse if the line is valid
-                    //else, move to next line
-                //if file ends, exit 
                 String currentLine = fileReader.nextLine();
-                //Scanner lineReader = new Scanner(currentLine);//scanner to only read currentLine
                 try (Scanner lineReader = new Scanner(currentLine)){
                     String courseName = lineReader.next();
                     double credits = lineReader.nextDouble();
@@ -208,12 +193,8 @@ public class Student {
         catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-        //check if file contents are valid
     }
     public double calculateGPA() {
-        //earned credits/possible credits
-        //earned credits = grade * credits
-        //credits possible = sum of credits
         double GPA = 0.0;
         double earnedCredits = this.getWeightedGrade();
         double possibleCredits = this.getTotalCreditHours();
@@ -225,7 +206,7 @@ public class Student {
     }
     public String judgment(double GPA) {
         String judgment = null;
-        if (GPA >= 4.00) {//perfect
+        if (GPA >= 4.00) {
             judgment = "Acceptable, you can come home to dinner.";
         }
         else if (GPA >= 3.00) {
@@ -242,8 +223,7 @@ public class Student {
         }
         return judgment;
     }
-    public double getTotalCreditHours() {//returns total count of credit hours
-        //iterate thru each element in courseList and get the sum of the credit hours fields
+    public double getTotalCreditHours() {
         double totalHours = 0;
         for (int i = 0; i < this.courseList.size(); i++) {
             Course currentCourse = this.courseList.get(i);
@@ -251,8 +231,7 @@ public class Student {
         }
         return totalHours;
     }
-    public double getWeightedGrade() {//returns grade points * credit hours in each class
-        //iterate thru each element and multiply the grade * credits. add this to the sum
+    public double getWeightedGrade() {
         double totalWeightedGrade = 0.0;
         for (int i = 0; i < this.courseList.size(); i++) {
             Course currentCourse = this.courseList.get(i);
