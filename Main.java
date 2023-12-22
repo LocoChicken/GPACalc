@@ -63,6 +63,7 @@ public class Main {
             getUserChoice(createdStudent);
         }
         else if (userChoice == 2) {
+            printProfiles();
             System.out.print("Enter a name: ");
             String studentName = scnr.nextLine();
             Student loadedStudent = loadProfile(nameList, studentName);
@@ -124,6 +125,14 @@ public class Main {
         }
         else {
             getProfileChoice(nameList);
+        }
+    }
+    public static void printProfiles() {
+        int counter = 1;
+        System.out.println("---------Name List---------");
+        for (int i = 0; i < nameList.size(); i++) {
+            System.out.println(counter + ". " + nameList.get(i));
+            counter++;
         }
     }
     public static String generateFileName(String studentName) {
