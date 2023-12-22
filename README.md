@@ -1,1 +1,1 @@
-Don't break it, it's flawless, trust. What could possibly go wrong??!!
+Just click run and follow the directions. WHEN IT SAYS ENTER A NUMBER ENTER A NUMBER, OTHERWISE JUST ENTER THE NAME DON'T BE DUMB

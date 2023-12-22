@@ -20,11 +20,7 @@ public class Main {
         catch (NullPointerException e) {
             System.out.println("No classes found");
         }
-        //Step 2: show menu for adding, loading, editing, and deleting a student
-            //menu thingie
-        printProfileMenu();
-        //Step 3: get user input for choices
-        getProfileChoice(nameList);
+        swapToProfileManager();
     }
     public static void printProfileMenu() {
         System.out.println("---------Profile Manager---------");
@@ -35,7 +31,6 @@ public class Main {
         System.out.println("4. Delete profile");
     }
     public static void getProfileChoice(ArrayList<String> nameList) throws FileNotFoundException {
-        //e
         System.out.print("Choose an option (choose -1 to show menu): ");
         Scanner userInput = new Scanner(System.in);
         int userChoice = 0;
@@ -55,7 +50,6 @@ public class Main {
     public static void profileChoiceHandler(ArrayList<String> nameList, int userChoice) throws FileNotFoundException {
         Scanner scnr = new Scanner(System.in);
         if (userChoice == 1) {
-            //get name
             System.out.print("Enter a name: ");
             String studentName = scnr.nextLine();
             Student createdStudent = createProfile(nameList, studentName);
@@ -66,30 +60,27 @@ public class Main {
             printProfiles();
             System.out.print("Enter a name: ");
             String studentName = scnr.nextLine();
+            if (!nameList.contains(studentName)) {
+                System.out.println("Name not found");
+                swapToProfileManager();
+            }
             Student loadedStudent = loadProfile(nameList, studentName);
             loadProfile(nameList, studentName);
             printMainMenu(loadedStudent);
             getUserChoice(loadedStudent);
         }
         else if (userChoice == 3) {
-            //Edit profile
             System.out.print("Choose a name to change: ");
             String nameToChange = scnr.nextLine();
-            //check if the name exists
             if (!nameList.contains(nameToChange)) {
                 System.out.println("Name does not exist.");
                 swapToProfileManager();
             }
-            //if it does...
-            //change it in the arraylist
-            //overwrite the file with new arraylist
             System.out.print("Enter a new name: ");
             String newName = scnr.nextLine();
             int indexOfTarget = nameList.indexOf(nameToChange);
             nameList.set(indexOfTarget, newName);
             printNamesToFile(nameList);
-            //then find the file of nameToChange
-            //then change that file name
             String oldFileName = generateFileName(nameToChange);
             File oldFile = new File(oldFileName);
             String newFileName = generateFileName(newName);
@@ -98,20 +89,15 @@ public class Main {
             swapToProfileManager();
         }
         else if (userChoice == 4) {
-            //delete profile
             System.out.print("Choose a name to delete: ");
             String nameToDelete = scnr.nextLine();
-            //check if the name exists
             if (!nameList.contains(nameToDelete)) {
                 System.out.println("Name does not exist.");
                 swapToProfileManager();
             }
-            //if it does...
-            //deleting and overwritting namelist in the file
             int indexOfTarget = nameList.indexOf(nameToDelete);
             nameList.remove(indexOfTarget);
             printNamesToFile(nameList);
-            //deleting file
             String fileNameToDelete = generateFileName(nameToDelete);
             File fileToDelete = new File(fileNameToDelete);
             fileToDelete.delete();
@@ -136,7 +122,6 @@ public class Main {
         }
     }
     public static String generateFileName(String studentName) {
-        //takes student name and converts it to the conventional file name
         String fileName = studentName;
         fileName = studentName.replaceAll(" ", "");
         fileName = fileName + "_saveFile.txt";
@@ -144,11 +129,10 @@ public class Main {
     }
     public static Student createProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
         Student currentStudent = new Student(studentName);
-        currentStudent.updateCourseFile();//creates and updates course file 
+        currentStudent.updateCourseFile();
         nameList.add(studentName);
         printNamesToFile(nameList);
         return currentStudent;
-        //ask to do something else
     }
     public static void printNamesToFile(ArrayList<String> nameList) throws FileNotFoundException {
         PrintWriter nameListWriter = new PrintWriter("studentNameList.txt");
@@ -157,14 +141,10 @@ public class Main {
         }
         nameListWriter.close();
      }
-    //load profile method
     public static Student loadProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
-        //check if name exists
         if (!nameList.contains(studentName)) {
             swapToProfileManager();            
         }
-        //if yes...
-        //import courses from corresponding file
         Student loadedStudent = new Student(studentName);
         try {
             String fileName = loadedStudent.createFileName(loadedStudent.getStudentName());
@@ -178,11 +158,7 @@ public class Main {
             System.out.println(loadedStudent.getCourseListFileName() + " caused a nullpointer excelptiodn");
         }
         return loadedStudent;
-        //print main menu
-        //get user choice
     }
-    //edit profile method (changes the name of the student and the file)
-    //delete profile method (deletes the student from the file and deletes their corresponding file) aka replace the file data with all students besdies deleted one
     public static void printMainMenu(Student currentStudent) throws FileNotFoundException {
         System.out.println("---------GPA Calculator---------");
         System.out.println("0. Exit programme");
@@ -296,10 +272,8 @@ public class Main {
             System.out.println();
         }
         else if (userChoice == 10) {
-            //swap profiles/go back to profile manager
             currentStudent.updateCourseFile();
             currentStudent.clearData();
-            //swap
             swapToProfileManager();
         }
         else if (userChoice == 0) {
