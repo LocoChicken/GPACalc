@@ -59,14 +59,16 @@ public class Main {
             System.out.print("Enter a name: ");
             String studentName = scnr.nextLine();
             Student createdStudent = createProfile(nameList, studentName);
-            swapToProfileManager();
+            printMainMenu(createdStudent);
+            getUserChoice(createdStudent);
         }
         else if (userChoice == 2) {
             System.out.print("Enter a name: ");
             String studentName = scnr.nextLine();
             Student loadedStudent = loadProfile(nameList, studentName);
             loadProfile(nameList, studentName);
-            swapToProfileManager();
+            printMainMenu(loadedStudent);
+            getUserChoice(loadedStudent);
         }
         else if (userChoice == 3) {
             //Edit profile
@@ -184,6 +186,7 @@ public class Main {
         System.out.println("7. Calculate GPA");
         System.out.println("8. Input notes");
         System.out.println("9. Clear data");
+        System.out.println("10. Return to profile manager");
         System.out.println();
     }
     public static void getUserChoice(Student currentStudent) throws FileNotFoundException {
