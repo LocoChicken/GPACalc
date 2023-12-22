@@ -1,17 +1,19 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) {
-        Student bean = new Student("Cannibalistic Chicken");
-        try {
-            bean.importCoursesFromFile("saveFile.txt");
-            printMainMenu(bean);
-            getUserChoice(bean);
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
+    public static void main(String[] args) throws FileNotFoundException {
+        StudentManager.startup();
+        //Student bean = new Student("Cannibalistic Chicken");
+        // try {
+        //     bean.importCoursesFromFile("saveFile.txt");
+        //     printMainMenu(bean);
+        //     getUserChoice(bean);
+        // }
+        // catch (FileNotFoundException e) {
+        //     System.out.println("File not found");
+        // }
     }
     public static void printMainMenu(Student currentStudent) throws FileNotFoundException {
         System.out.println("---------GPA Calculator---------");
@@ -121,7 +123,7 @@ public class Main {
             System.out.println();
         }
         else if (userChoice == 0) {
-            currentStudent.printCoursesToFile("saveFile.txt");
+            currentStudent.updateCourseFile();
             System.out.println("Exited programme!");
         }
         else {

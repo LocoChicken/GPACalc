@@ -10,6 +10,7 @@ public class Student {
     private String studentName = "";
     private int numCourses = 0;
     private double numCredits = 0.0;
+    private String courseListFileName = null;
     private ArrayList<Course> courseList = null;
     
     public Student(String name) {
@@ -21,6 +22,27 @@ public class Student {
     }
     public void setStudentName(String name) {
         this.studentName = name;
+    }
+    public String getCourseListFileName() {
+        return this.courseListFileName;
+    }
+    public void setFileName(String fileName) {
+        //just sets it
+        this.courseListFileName = fileName;
+    }
+    public String createFileName(String studentName) {
+        //takes student name and converts it to the conventional file name
+        String fileName = studentName;
+        fileName = studentName.replaceAll(" ", "");
+        fileName = fileName + "_saveFile.txt";
+        this.courseListFileName = fileName;
+        return this.courseListFileName;
+    }
+    public void updateCourseFile() throws FileNotFoundException {
+        //creates file and prints data to file
+        String fileName = this.createFileName(studentName);
+        //also creates if it doesn't exist
+        printCoursesToFile(fileName);
     }
     public ArrayList<Course> getStudentCourses() {
         return this.courseList;
