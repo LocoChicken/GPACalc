@@ -1,4 +1,11 @@
-To run in terminal: 
-1. Go to the directory where the file of the programme is
-2. Run javac [main class name].java if you have not yet done so. This creates the .class files
-3. Run java [main class name] to run the programme
+Public Instructions: 
+First, to go to the correct directory, type: “cd /Users/[username]/Downloads/GPACalcPlay”
+*Or wherever you have it downloaded. Figure it out, even my dumb butt was able to lol.
+
+Second, if this is your first time, type: “javac OpenCalc.java”
+
+Third, type: “java OpenCalc”
+
+Shortcut (1st time): “cd /Users/[username]/Downloads/GPACalcPlay && javac OpenCalc.java && java OpenCalc”
+
+Shortcut (after 1st time): “cd /Users/[username]/Downloads/GPACalcPlay && java OpenCalc”
