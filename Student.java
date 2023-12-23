@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.File;
 
 public class Student {
-    String directoryPathMac = "/workspaces/GPACalc/Save Files/";
+    public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
     private String studentName = "";
     private int numCourses = 0;
     private double numCredits = 0.0;
@@ -185,7 +185,7 @@ public class Student {
         return found;
     }
     public void printCoursesToFile(String fileName) throws FileNotFoundException {
-        File saveFile = new File(directoryPathMac + fileName);
+        File saveFile = new File(directoryPath + fileName);
         try {
             saveFile.createNewFile();
         }
@@ -203,7 +203,7 @@ public class Student {
         System.out.println("Courses added to file!");
     }
     public void importCoursesFromFile(String fileName) throws FileNotFoundException {
-        try (Scanner fileReader = new Scanner(new FileInputStream(directoryPathMac + fileName))) {
+        try (Scanner fileReader = new Scanner(new FileInputStream(directoryPath + fileName))) {
             while (fileReader.hasNextLine()) {
                 String currentLine = fileReader.nextLine();
                 try (Scanner lineReader = new Scanner(currentLine)){
