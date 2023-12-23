@@ -86,6 +86,9 @@ public class MainCalc {
             do {
                 System.out.print("Enter a name (type \"cancel\" to cancel): ");
                 studentName = scnr.nextLine();
+                if (nameList.contains(studentName)) {
+                    System.out.println("Name already exists.");
+                }
             }
             while(nameList.contains(studentName));
             if (!studentName.equals("cancel")) {
@@ -103,8 +106,11 @@ public class MainCalc {
             do {
                 System.out.print("Enter a name (type \"cancel\" to cancel): ");
                 studentName = scnr.nextLine();
+                if (!studentName.equals("cancel")) {
+                    System.out.println("Name not found.");
+                }
             }
-            while (!nameList.contains(studentName));
+            while (!nameList.contains(studentName) && !studentName.equals("cancel"));
             if (!studentName.equals("cancel")) {
                 Student loadedStudent = loadProfile(nameList, studentName);
                 loadProfile(nameList, studentName);
@@ -120,8 +126,11 @@ public class MainCalc {
             do {
                 System.out.print("Choose a name to change (type \"cancel\" to cancel): ");
                 nameToChange = scnr.nextLine();
+                if (!nameToChange.equals("cancel")) {
+                    System.out.println("Name not found.");
+                }
             }
-            while (!nameList.contains(nameToChange));
+            while (!nameList.contains(nameToChange) && !nameToChange.equals("cancel"));
             if (!nameToChange.equals("cancel")) {
                 System.out.print("Enter a new name: ");
                 String newName = scnr.nextLine();
@@ -141,14 +150,19 @@ public class MainCalc {
             do {
                 System.out.print("Choose a name to delete: ");
                 nameToDelete = scnr.nextLine();
+                if (!nameToDelete.equals("cancel")) {
+                    System.out.println("Name not found.");
+                }
             }
-            while (!nameList.contains(nameToDelete));
-            int indexOfTarget = nameList.indexOf(nameToDelete);
-            nameList.remove(indexOfTarget);
-            printNamesToFile(nameList);
-            String fileNameToDelete = generateFileName(nameToDelete);
-            File fileToDelete = new File(directoryPath + fileNameToDelete);
-            fileToDelete.delete();
+            while (!nameList.contains(nameToDelete) && !nameToDelete.equals("cancel"));
+            if (!nameToDelete.equals("cancel")) {
+                int indexOfTarget = nameList.indexOf(nameToDelete);
+                nameList.remove(indexOfTarget);
+                printNamesToFile(nameList);
+                String fileNameToDelete = generateFileName(nameToDelete);
+                File fileToDelete = new File(directoryPath + fileNameToDelete);
+                fileToDelete.delete();
+            }
             getProfileChoice(nameList);
         }
         else if (userChoice == 0) {
