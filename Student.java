@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.File;
 
 public class Student {
-    public static Scanner scnr = new Scanner(System.in);
     public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
     private String studentName = "";
     private int numCourses = 0;
@@ -30,6 +29,7 @@ public class Student {
         return this.courseList;
     }
     public void addCourse() {
+        Scanner scnr = new Scanner(System.in);
         double creditCount = 0;
         double courseGrade = 0.00;
         System.out.print("Enter the name of the course to add: ");
@@ -81,6 +81,7 @@ public class Student {
         System.out.println();
     }
     public void removeCourse() {
+        Scanner scnr = new Scanner(System.in);
         this.printCourseList();
         System.out.print("Type a course name to remove: ");
         String choice = scnr.nextLine();
@@ -93,6 +94,7 @@ public class Student {
         }
     }
     public void editCourse() {
+        Scanner scnr = new Scanner(System.in);
         this.printCourseList();
         System.out.print("Choose a course to edit by name: ");
         String choice = scnr.next();

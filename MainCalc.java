@@ -200,6 +200,8 @@ public class MainCalc {
             System.out.println("For class names, make them one word, usually with a dash (-). Example: FSE-100");
             System.out.println("For credit hours, input units.");
             System.out.println("For grade, refer to your syllabus for your professor's grading scale. Then use the following values for each letter grade input.");
+            System.out.println("Your grade in parenthesis (A+ for example) usually shows next to your numerical percentage grade in Canvas.");
+            System.out.println("Enter the number associated with the letter grade below.");
             System.out.println("An A+ is 4.33");
             System.out.println("An A is 4.00");
             System.out.println("An A- is 3.67");
