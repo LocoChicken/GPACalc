@@ -8,20 +8,17 @@ import java.util.Scanner;
 public class Main {
     public static ArrayList<String> nameList = new ArrayList<>();
     public static void main(String[] args) throws FileNotFoundException {
-        //Step 1: Check studentNameList for existing students
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
             while (fileReader.hasNextLine()) {
                 nameList.add(fileReader.nextLine());
             }
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        catch (NullPointerException e) {
-            System.out.println("No classes found");
+            System.out.println("File named studentNameList.txt not found.");
         }
         swapToProfileManager();
     }
+    //menu printer methods
     public static void printProfileMenu() {
         System.out.println("---------Profile Manager---------");
         System.out.println("0. Exit programme");
@@ -29,135 +26,6 @@ public class Main {
         System.out.println("2. Load profile");
         System.out.println("3. Edit profile name");
         System.out.println("4. Delete profile");
-    }
-    public static void getProfileChoice(ArrayList<String> nameList) throws FileNotFoundException {
-        System.out.print("Choose an option (choose -1 to show menu): ");
-        Scanner userInput = new Scanner(System.in);
-        int userChoice = 0;
-        boolean done = false;
-        while (!done) {
-            try {
-                userChoice = userInput.nextInt();
-                profileChoiceHandler(nameList, userChoice);
-                done = true;
-            }
-            catch (InputMismatchException e) {
-                System.out.print("Enter a number: ");
-                userInput.nextLine();
-            }
-        }
-    }
-    public static void profileChoiceHandler(ArrayList<String> nameList, int userChoice) throws FileNotFoundException {
-        Scanner scnr = new Scanner(System.in);
-        if (userChoice == 1) {
-            System.out.print("Enter a name: ");
-            String studentName = scnr.nextLine();
-            Student createdStudent = createProfile(nameList, studentName);
-            printMainMenu(createdStudent);
-            getUserChoice(createdStudent);
-        }
-        else if (userChoice == 2) {
-            printProfiles();
-            System.out.print("Enter a name: ");
-            String studentName = scnr.nextLine();
-            if (!nameList.contains(studentName)) {
-                System.out.println("Name not found");
-                swapToProfileManager();
-            }
-            Student loadedStudent = loadProfile(nameList, studentName);
-            loadProfile(nameList, studentName);
-            printMainMenu(loadedStudent);
-            getUserChoice(loadedStudent);
-        }
-        else if (userChoice == 3) {
-            System.out.print("Choose a name to change: ");
-            String nameToChange = scnr.nextLine();
-            if (!nameList.contains(nameToChange)) {
-                System.out.println("Name does not exist.");
-                swapToProfileManager();
-            }
-            System.out.print("Enter a new name: ");
-            String newName = scnr.nextLine();
-            int indexOfTarget = nameList.indexOf(nameToChange);
-            nameList.set(indexOfTarget, newName);
-            printNamesToFile(nameList);
-            String oldFileName = generateFileName(nameToChange);
-            File oldFile = new File(oldFileName);
-            String newFileName = generateFileName(newName);
-            File newFile = new File(newFileName);
-            oldFile.renameTo(newFile);
-            swapToProfileManager();
-        }
-        else if (userChoice == 4) {
-            System.out.print("Choose a name to delete: ");
-            String nameToDelete = scnr.nextLine();
-            if (!nameList.contains(nameToDelete)) {
-                System.out.println("Name does not exist.");
-                swapToProfileManager();
-            }
-            int indexOfTarget = nameList.indexOf(nameToDelete);
-            nameList.remove(indexOfTarget);
-            printNamesToFile(nameList);
-            String fileNameToDelete = generateFileName(nameToDelete);
-            File fileToDelete = new File(fileNameToDelete);
-            fileToDelete.delete();
-            swapToProfileManager();
-        }
-        else if (userChoice == 0) {
-            System.out.println("Bai bai");
-        }
-        else if (userChoice == -1) {
-            swapToProfileManager();
-        }
-        else {
-            getProfileChoice(nameList);
-        }
-    }
-    public static void printProfiles() {
-        int counter = 1;
-        System.out.println("---------Name List---------");
-        for (int i = 0; i < nameList.size(); i++) {
-            System.out.println(counter + ". " + nameList.get(i));
-            counter++;
-        }
-    }
-    public static String generateFileName(String studentName) {
-        String fileName = studentName;
-        fileName = studentName.replaceAll(" ", "");
-        fileName = fileName + "_saveFile.txt";
-        return fileName;
-    }
-    public static Student createProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
-        Student currentStudent = new Student(studentName);
-        currentStudent.updateCourseFile();
-        nameList.add(studentName);
-        printNamesToFile(nameList);
-        return currentStudent;
-    }
-    public static void printNamesToFile(ArrayList<String> nameList) throws FileNotFoundException {
-        PrintWriter nameListWriter = new PrintWriter("studentNameList.txt");
-        for (int i = 0; i < nameList.size(); i++) {
-            nameListWriter.println(nameList.get(i));
-        }
-        nameListWriter.close();
-     }
-    public static Student loadProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
-        if (!nameList.contains(studentName)) {
-            swapToProfileManager();            
-        }
-        Student loadedStudent = new Student(studentName);
-        try {
-            String fileName = loadedStudent.createFileName(loadedStudent.getStudentName());
-            System.out.println(fileName);
-            loadedStudent.importCoursesFromFile(fileName);
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        catch (NullPointerException e) {
-            System.out.println(loadedStudent.getCourseListFileName() + " caused a nullpointer excelptiodn");
-        }
-        return loadedStudent;
     }
     public static void printMainMenu(Student currentStudent) throws FileNotFoundException {
         System.out.println("---------GPA Calculator---------");
@@ -174,6 +42,24 @@ public class Main {
         System.out.println("10. Return to profile manager");
         System.out.println();
     }
+    //get choice from user methods
+    public static void getProfileChoice(ArrayList<String> nameList) throws FileNotFoundException {
+        System.out.print("Choose an option (choose -1 to show menu): ");
+        Scanner userInput = new Scanner(System.in);
+        int userChoice = 0;
+        boolean done = false;
+        while (!done) {
+            try {
+                userChoice = userInput.nextInt();
+                profileChoiceHandler(nameList, userChoice);
+                done = true;
+            }
+            catch (InputMismatchException e) {
+                System.out.print(userChoice + " is an invalid input, enter a number: ");
+                userInput.nextLine();
+            }
+        }
+    }
     public static void getUserChoice(Student currentStudent) throws FileNotFoundException {
         System.out.print("Choose an option (choose -1 to show menu): ");
         Scanner userInput = new Scanner(System.in);
@@ -186,20 +72,88 @@ public class Main {
                 done = true;
             }
             catch (InputMismatchException e) {
-                System.out.print("Enter a number: ");
+                System.out.print(userChoice + " is an invalid input, enter a number: ");
                 userInput.nextLine();
             }
         }
     }
-    public static void swapToProfileManager() throws FileNotFoundException {
-        printProfileMenu();
-        getProfileChoice(nameList);
+    //choice handler methods
+    public static void profileChoiceHandler(ArrayList<String> nameList, int userChoice) throws FileNotFoundException {
+        Scanner scnr = new Scanner(System.in);
+        if (userChoice == 1) {
+            String studentName = "";
+            do {
+                System.out.print("Enter a name: ");
+                studentName = scnr.nextLine();
+            }
+            while(nameList.contains(studentName));
+            Student createdStudent = createProfile(nameList, studentName);
+            printMainMenu(createdStudent);
+            getUserChoice(createdStudent);
+        }
+        else if (userChoice == 2) {
+            printProfiles();
+            String studentName = "";
+            do {
+                System.out.print("Enter a name: ");
+                studentName = scnr.nextLine();
+            }
+            while (!nameList.contains(studentName));
+            Student loadedStudent = loadProfile(nameList, studentName);
+            loadProfile(nameList, studentName);
+            printMainMenu(loadedStudent);
+            getUserChoice(loadedStudent);
+        }
+        else if (userChoice == 3) {
+            String nameToChange = "";
+            do {
+                System.out.print("Choose a name to change: ");
+                nameToChange = scnr.nextLine();
+            }
+            while (!nameList.contains(nameToChange));
+            System.out.print("Enter a new name: ");
+            String newName = scnr.nextLine();
+            int indexOfTarget = nameList.indexOf(nameToChange);
+            nameList.set(indexOfTarget, newName);
+            printNamesToFile(nameList);
+            String oldFileName = generateFileName(nameToChange);
+            File oldFile = new File(oldFileName);
+            String newFileName = generateFileName(newName);
+            File newFile = new File(newFileName);
+            oldFile.renameTo(newFile);
+            getProfileChoice(nameList);
+        }
+        else if (userChoice == 4) {
+            String nameToDelete = "";
+            do {
+                System.out.print("Choose a name to delete: ");
+                nameToDelete = scnr.nextLine();
+            }
+            while (!nameList.contains(nameToDelete));
+            int indexOfTarget = nameList.indexOf(nameToDelete);
+            nameList.remove(indexOfTarget);
+            printNamesToFile(nameList);
+            String fileNameToDelete = generateFileName(nameToDelete);
+            File fileToDelete = new File(fileNameToDelete);
+            fileToDelete.delete();
+            getProfileChoice(nameList);
+        }
+        else if (userChoice == 0) {
+            System.out.println("Bai bai");
+        }
+        else if (userChoice == -1) {
+            printProfileMenu();
+            getProfileChoice(nameList);
+        }
+        else {
+            System.out.println("Invalid input, input the number in front of the desired option.");
+            getProfileChoice(nameList);
+        }
     }
     public static void choiceHandler(Student currentStudent, int userChoice) throws FileNotFoundException {
         if (userChoice == 1)  {
             currentStudent.addCourse();
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == -1) {
             printMainMenu(currentStudent);
@@ -209,17 +163,14 @@ public class Main {
             currentStudent.removeCourse();
             getUserChoice(currentStudent);
             System.out.println("Choose a course to remove: ");
-            System.out.println();
         }
         else if (userChoice == 3) {
             currentStudent.editCourse();
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 4) {
             currentStudent.printCourseList();
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 5) {
             Scanner scnr = new Scanner(System.in);
@@ -227,7 +178,6 @@ public class Main {
             String fileName = scnr.next();
             currentStudent.importCoursesFromFile(fileName);
             getUserChoice(currentStudent);
-            System.out.println();
 
         }
         else if (userChoice == 6) {
@@ -236,7 +186,6 @@ public class Main {
             String fileName = scnr.next();
             currentStudent.printCoursesToFile(fileName);
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 7) {
             double GPA = currentStudent.calculateGPA();
@@ -245,7 +194,6 @@ public class Main {
             System.out.printf("GPA: %.2f\n", GPA);
             System.out.println(judgment);
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 8) {
             System.out.println("---------Input Notes---------");
@@ -263,13 +211,11 @@ public class Main {
             System.out.println("A D is 1.00");
             System.out.println("An F is 0.00");
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 9) {
             System.out.println("Data cleared!");
             currentStudent.clearData();
             getUserChoice(currentStudent);
-            System.out.println();
         }
         else if (userChoice == 10) {
             currentStudent.updateCourseFile();
@@ -283,5 +229,54 @@ public class Main {
         else {
             getUserChoice(currentStudent);
         }
+    }
+    //create and load profile methods
+    public static Student createProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
+        Student currentStudent = new Student(studentName);
+        currentStudent.updateCourseFile();
+        nameList.add(studentName);
+        printNamesToFile(nameList);
+        return currentStudent;
+    }
+    public static Student loadProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
+        Student loadedStudent = new Student(studentName);
+        String fileName = loadedStudent.createFileName(loadedStudent.getStudentName());
+        try {
+            loadedStudent.importCoursesFromFile(fileName);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File with name "+ fileName + " not found");
+            //maybe create file in case of this issue? dunno how tho
+        }
+        return loadedStudent;
+    }
+    //print profiles (from studentNameList.txt)
+    public static void printProfiles() {
+        int counter = 1;
+        System.out.println("---------Name List---------");
+        for (int i = 0; i < nameList.size(); i++) {
+            System.out.println(counter + ". " + nameList.get(i));
+            counter++;
+        }
+    }
+    //method for generating what the corresponding file name would be based on a name (strings)
+    public static String generateFileName(String studentName) {
+        String fileName = studentName;
+        fileName = studentName.replaceAll(" ", "");
+        fileName = fileName + "_saveFile.txt";
+        return fileName;
+    }
+    //prints names currently in the nameList ArrayList into the studentNamesList.txt file
+    public static void printNamesToFile(ArrayList<String> nameList) throws FileNotFoundException {
+        PrintWriter nameListWriter = new PrintWriter("studentNameList.txt");
+        for (int i = 0; i < nameList.size(); i++) {
+            nameListWriter.println(nameList.get(i));
+        }
+        nameListWriter.close();
+    }
+    //calls the printProfileMenu and getProfileChoice methods. FIX: causes a recursive call, which sometimes prevents the programme from being exited when the user wants it to
+    public static void swapToProfileManager() throws FileNotFoundException {
+        printProfileMenu();
+        getProfileChoice(nameList);
     }
 }
