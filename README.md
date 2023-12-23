@@ -1,4 +1,5 @@
 How to launch programme in terminal: 
+
 First, to go to the correct directory, type: “cd /Users/[username]/Downloads/GPACalcPlay”
 *Or wherever you have it downloaded. Figure it out, even my dumb butt was able to lol.
 
