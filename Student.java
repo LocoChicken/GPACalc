@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.File;
 
 public class Student {
+    public static Scanner scnr = new Scanner(System.in);
     public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
     private String studentName = "";
     private int numCourses = 0;
@@ -53,9 +54,8 @@ public class Student {
     public void addCourse() {
         double creditCount = 0;
         double courseGrade = 0.00;
-        Scanner courseAdder = new Scanner(System.in);
         System.out.print("Enter the name of the course to add: ");
-        String courseName = courseAdder.next();
+        String courseName = scnr.next();
         if (courseExists(courseName)) {
             System.out.println("Course already exists!");
             System.out.println();
@@ -65,24 +65,24 @@ public class Student {
         while (!done) {
             try {
                 System.out.print("Enter the number of credits this course is worth: ");
-                creditCount = courseAdder.nextDouble();
+                creditCount = scnr.nextDouble();
                 done = true;
             }
             catch (InputMismatchException e) {
                 System.out.println("Enter a number");
-                courseAdder.nextLine();
+                scnr.nextLine();
             }
         }
         done = false;
         while (!done) {
             try {
                 System.out.print("Enter your grade in the course: ");
-                courseGrade = courseAdder.nextDouble();
+                courseGrade = scnr.nextDouble();
                 done = true;
             }
             catch (InputMismatchException e) {
                 System.out.print("Enter a number");
-                courseAdder.nextLine();
+                scnr.nextLine();
             }
         }
         Course courseToAdd = new Course(courseName, creditCount, courseGrade);
@@ -104,9 +104,8 @@ public class Student {
     }
     public void removeCourse() {
         this.printCourseList();
-        Scanner courseRemover = new Scanner(System.in);
         System.out.print("Type a course name to remove: ");
-        String choice = courseRemover.nextLine();
+        String choice = scnr.nextLine();
         if (this.courseExists(choice)) {
             Course courseToRemove = getCourseByName(choice);
             courseList.remove(courseToRemove);
@@ -117,19 +116,18 @@ public class Student {
     }
     public void editCourse() {
         this.printCourseList();
-        Scanner courseEditor = new Scanner(System.in);
         System.out.print("Choose a course to edit by name: ");
-        String choice = courseEditor.next();
+        String choice = scnr.next();
         if (this.courseExists(choice)) {
             Course courseToEdit = this.getCourseByName(choice);
             System.out.print("Enter a name: ");
-            String newName = courseEditor.next();
+            String newName = scnr.next();
             courseToEdit.setCourseName(newName);
             System.out.print("Enter number of credits: ");
-            double newCredits = courseEditor.nextDouble();
+            double newCredits = scnr.nextDouble();
             courseToEdit.setCourseCredits(newCredits);
             System.out.print("Enter a grade: ");
-            double newGrade = courseEditor.nextDouble();
+            double newGrade = scnr.nextDouble();
             courseToEdit.setCourseGrade(newGrade);
             courseToEdit.printCourseInfo();
         }

@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class MainCalc {
     public static ArrayList<String> nameList = new ArrayList<>();
     public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
+    public static Scanner scnr = new Scanner(System.in);
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
             while (fileReader.hasNextLine()) {
@@ -46,41 +47,38 @@ public class MainCalc {
     //get choice from user methods
     public static void getProfileChoice(ArrayList<String> nameList) throws FileNotFoundException {
         System.out.print("Choose an option (choose -1 to show menu): ");
-        Scanner userInput = new Scanner(System.in);
         int userChoice = 0;
         boolean done = false;
         while (!done) {
             try {
-                userChoice = userInput.nextInt();
+                userChoice = scnr.nextInt();
                 profileChoiceHandler(nameList, userChoice);
                 done = true;
             }
             catch (InputMismatchException e) {
                 System.out.print(userChoice + " is an invalid input, enter a number: ");
-                userInput.nextLine();
+                scnr.nextLine();
             }
         }
     }
     public static void getUserChoice(Student currentStudent) throws FileNotFoundException {
         System.out.print("Choose an option (choose -1 to show menu): ");
-        Scanner userInput = new Scanner(System.in);
         int userChoice = 0;
         boolean done = false;
         while (!done) {
             try {
-                userChoice = userInput.nextInt();
+                userChoice = scnr.nextInt();
                 choiceHandler(currentStudent, userChoice);
                 done = true;
             }
             catch (InputMismatchException e) {
                 System.out.print(userChoice + " is an invalid input, enter a number: ");
-                userInput.nextLine();
+                scnr.nextLine();
             }
         }
     }
     //choice handler methods
     public static void profileChoiceHandler(ArrayList<String> nameList, int userChoice) throws FileNotFoundException {
-        Scanner scnr = new Scanner(System.in);
         if (userChoice == 1) {
             String studentName = "";
             do {
@@ -174,7 +172,6 @@ public class MainCalc {
             getUserChoice(currentStudent);
         }
         else if (userChoice == 5) {
-            Scanner scnr = new Scanner(System.in);
             System.out.print("Enter file name: ");
             String fileName = scnr.next();
             currentStudent.importCoursesFromFile(fileName);
@@ -182,7 +179,6 @@ public class MainCalc {
 
         }
         else if (userChoice == 6) {
-            Scanner scnr = new Scanner(System.in);
             System.out.print("Enter file name: ");
             String fileName = scnr.next();
             currentStudent.printCoursesToFile(fileName);
