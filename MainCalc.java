@@ -215,12 +215,13 @@ public class MainCalc {
             getUserChoice(currentStudent);
         }
         else if (userChoice == 10) {
-            currentStudent.updateCourseFile();
-            currentStudent.clearData();
+            String fileName = generateFileName(currentStudent.getStudentName());
+            currentStudent.printCoursesToFile(fileName);
             swapToProfileManager();
         }
         else if (userChoice == 0) {
-            currentStudent.updateCourseFile();
+            String fileName = generateFileName(currentStudent.getStudentName());
+            currentStudent.printCoursesToFile(fileName);
             System.out.println("Exited programme!");
         }
         else {
@@ -230,14 +231,15 @@ public class MainCalc {
     //create and load profile methods
     public static Student createProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
         Student currentStudent = new Student(studentName);
-        currentStudent.updateCourseFile();
+        String fileName = generateFileName(currentStudent.getStudentName());
+        currentStudent.printCoursesToFile(fileName);
         nameList.add(studentName);
         printNamesToFile(nameList);
         return currentStudent;
     }
     public static Student loadProfile(ArrayList<String> nameList, String studentName) throws FileNotFoundException {
         Student loadedStudent = new Student(studentName);
-        String fileName = loadedStudent.createFileName(loadedStudent.getStudentName());
+        String fileName = generateFileName(loadedStudent.getStudentName());
         try {
             loadedStudent.importCoursesFromFile(fileName);
         }
