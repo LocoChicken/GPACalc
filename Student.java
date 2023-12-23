@@ -14,7 +14,6 @@ public class Student {
     private String studentName = "";
     private int numCourses = 0;
     private double numCredits = 0.0;
-    private String courseListFileName = null;
     private ArrayList<Course> courseList = null;
     
     public Student(String name) {
