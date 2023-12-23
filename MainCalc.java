@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-public class Main {
+public class MainCalc {
     public static ArrayList<String> nameList = new ArrayList<>();
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
