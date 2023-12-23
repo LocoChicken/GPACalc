@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 public class MainCalc {
     public static ArrayList<String> nameList = new ArrayList<>();
+    public static String directoryPathMac = "/workspaces/GPACalc/Save Files/";
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
             while (fileReader.hasNextLine()) {
@@ -117,9 +118,9 @@ public class MainCalc {
             nameList.set(indexOfTarget, newName);
             printNamesToFile(nameList);
             String oldFileName = generateFileName(nameToChange);
-            File oldFile = new File(oldFileName);
+            File oldFile = new File(directoryPathMac + oldFileName);
             String newFileName = generateFileName(newName);
-            File newFile = new File(newFileName);
+            File newFile = new File(directoryPathMac + newFileName);
             oldFile.renameTo(newFile);
             getProfileChoice(nameList);
         }
@@ -134,7 +135,7 @@ public class MainCalc {
             nameList.remove(indexOfTarget);
             printNamesToFile(nameList);
             String fileNameToDelete = generateFileName(nameToDelete);
-            File fileToDelete = new File(fileNameToDelete);
+            File fileToDelete = new File(directoryPathMac + fileNameToDelete);
             fileToDelete.delete();
             getProfileChoice(nameList);
         }

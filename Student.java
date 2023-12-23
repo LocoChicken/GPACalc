@@ -5,8 +5,11 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.File;
 
 public class Student {
+    String directoryPathMac = "/workspaces/GPACalc/Save Files/";
     private String studentName = "";
     private int numCourses = 0;
     private double numCredits = 0.0;
@@ -182,7 +185,14 @@ public class Student {
         return found;
     }
     public void printCoursesToFile(String fileName) throws FileNotFoundException {
-        PrintWriter fileWriter = new PrintWriter(fileName);
+        File saveFile = new File(directoryPathMac + fileName);
+        try {
+            saveFile.createNewFile();
+        }
+        catch (IOException e) {
+            System.out.println("File might already exist, all is fine.");
+        }
+        PrintWriter fileWriter = new PrintWriter(saveFile);
         for (int i = 0; i < this.courseList.size(); i++) {
             Course currentCourse = this.courseList.get(i);
             fileWriter.print(currentCourse.getCourseName() + " ");
@@ -193,7 +203,7 @@ public class Student {
         System.out.println("Courses added to file!");
     }
     public void importCoursesFromFile(String fileName) throws FileNotFoundException {
-        try (Scanner fileReader = new Scanner(new FileInputStream(fileName))) {
+        try (Scanner fileReader = new Scanner(new FileInputStream(directoryPathMac + fileName))) {
             while (fileReader.hasNextLine()) {
                 String currentLine = fileReader.nextLine();
                 try (Scanner lineReader = new Scanner(currentLine)){
