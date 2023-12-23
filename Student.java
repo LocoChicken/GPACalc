@@ -32,11 +32,14 @@ public class Student {
         Scanner scnr = new Scanner(System.in);
         double creditCount = 0;
         double courseGrade = 0.00;
-        System.out.print("Enter the name of the course to add: ");
+        System.out.print("Enter the name of the course to add (type \"cancel\" to cancel): ");
         String courseName = scnr.next();
         if (courseExists(courseName)) {
             System.out.println("Course already exists!");
             System.out.println();
+            return;
+        }
+        if (courseName.equals("cancel")) {
             return;
         }
         boolean done = false;
@@ -83,8 +86,11 @@ public class Student {
     public void removeCourse() {
         Scanner scnr = new Scanner(System.in);
         this.printCourseList();
-        System.out.print("Type a course name to remove: ");
+        System.out.print("Type a course name to remove (type \"cancel\" to cancel): ");
         String choice = scnr.nextLine();
+        if (choice.equals("cancel")) {
+            return;
+        }
         if (this.courseExists(choice)) {
             Course courseToRemove = getCourseByName(choice);
             courseList.remove(courseToRemove);
@@ -96,8 +102,11 @@ public class Student {
     public void editCourse() {
         Scanner scnr = new Scanner(System.in);
         this.printCourseList();
-        System.out.print("Choose a course to edit by name: ");
+        System.out.print("Choose a course to edit by name (type \"cancel\" to cancel): ");
         String choice = scnr.next();
+        if (choice.equals("cancel")) {
+            return;
+        }
         if (this.courseExists(choice)) {
             Course courseToEdit = this.getCourseByName(choice);
             System.out.print("Enter a name: ");
@@ -178,7 +187,7 @@ public class Student {
             fileWriter.println(currentCourse.getCourseGrade());
         }
         fileWriter.close();
-        System.out.println("Courses added to file!");
+        System.out.println("Courses added to file/Data saved!");
     }
     public void importCoursesFromFile(String fileName) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream(directoryPath + fileName))) {

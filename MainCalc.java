@@ -84,44 +84,56 @@ public class MainCalc {
         if (userChoice == 1) {
             String studentName = "";
             do {
-                System.out.print("Enter a name: ");
+                System.out.print("Enter a name (type \"cancel\" to cancel): ");
                 studentName = scnr.nextLine();
             }
             while(nameList.contains(studentName));
-            Student createdStudent = createProfile(nameList, studentName);
-            printMainMenu(createdStudent);
-            getUserChoice(createdStudent);
+            if (!studentName.equals("cancel")) {
+                Student createdStudent = createProfile(nameList, studentName);
+                printMainMenu(createdStudent);
+                getUserChoice(createdStudent);
+            }
+            else {
+                getProfileChoice(nameList);
+            }
         }
         else if (userChoice == 2) {
             printProfiles();
             String studentName = "";
             do {
-                System.out.print("Enter a name: ");
+                System.out.print("Enter a name (type \"cancel\" to cancel): ");
                 studentName = scnr.nextLine();
             }
             while (!nameList.contains(studentName));
-            Student loadedStudent = loadProfile(nameList, studentName);
-            loadProfile(nameList, studentName);
-            printMainMenu(loadedStudent);
-            getUserChoice(loadedStudent);
+            if (!studentName.equals("cancel")) {
+                Student loadedStudent = loadProfile(nameList, studentName);
+                loadProfile(nameList, studentName);
+                printMainMenu(loadedStudent);
+                getUserChoice(loadedStudent);
+            }
+            else {
+                getProfileChoice(nameList);
+            }
         }
         else if (userChoice == 3) {
             String nameToChange = "";
             do {
-                System.out.print("Choose a name to change: ");
+                System.out.print("Choose a name to change (type \"cancel\" to cancel): ");
                 nameToChange = scnr.nextLine();
             }
             while (!nameList.contains(nameToChange));
-            System.out.print("Enter a new name: ");
-            String newName = scnr.nextLine();
-            int indexOfTarget = nameList.indexOf(nameToChange);
-            nameList.set(indexOfTarget, newName);
-            printNamesToFile(nameList);
-            String oldFileName = generateFileName(nameToChange);
-            File oldFile = new File(directoryPath + oldFileName);
-            String newFileName = generateFileName(newName);
-            File newFile = new File(directoryPath + newFileName);
-            oldFile.renameTo(newFile);
+            if (!nameToChange.equals("cancel")) {
+                System.out.print("Enter a new name: ");
+                String newName = scnr.nextLine();
+                int indexOfTarget = nameList.indexOf(nameToChange);
+                nameList.set(indexOfTarget, newName);
+                printNamesToFile(nameList);
+                String oldFileName = generateFileName(nameToChange);
+                File oldFile = new File(directoryPath + oldFileName);
+                String newFileName = generateFileName(newName);
+                File newFile = new File(directoryPath + newFileName);
+                oldFile.renameTo(newFile);
+            }
             getProfileChoice(nameList);
         }
         else if (userChoice == 4) {
@@ -164,7 +176,6 @@ public class MainCalc {
         else if (userChoice == 2) {
             currentStudent.removeCourse();
             getUserChoice(currentStudent);
-            System.out.println("Choose a course to remove: ");
         }
         else if (userChoice == 3) {
             currentStudent.editCourse();
@@ -227,7 +238,7 @@ public class MainCalc {
         else if (userChoice == 0) {
             String fileName = generateFileName(currentStudent.getStudentName());
             currentStudent.printCoursesToFile(fileName);
-            System.out.println("Exited programme!");
+            System.out.println("Bai bai!");
         }
         else {
             getUserChoice(currentStudent);
