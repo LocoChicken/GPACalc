@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class MainCalc {
     public static ArrayList<String> nameList = new ArrayList<>();
     public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
-    public static Scanner scnr = new Scanner(System.in);
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
             while (fileReader.hasNextLine()) {
@@ -46,6 +45,7 @@ public class MainCalc {
     }
     //get choice from user methods
     public static void getProfileChoice(ArrayList<String> nameList) throws FileNotFoundException {
+        Scanner scnr = new Scanner(System.in);
         System.out.print("Choose an option (choose -1 to show menu): ");
         int userChoice = 0;
         boolean done = false;
@@ -62,6 +62,7 @@ public class MainCalc {
         }
     }
     public static void getUserChoice(Student currentStudent) throws FileNotFoundException {
+        Scanner scnr = new Scanner(System.in);
         System.out.print("Choose an option (choose -1 to show menu): ");
         int userChoice = 0;
         boolean done = false;
@@ -79,6 +80,7 @@ public class MainCalc {
     }
     //choice handler methods
     public static void profileChoiceHandler(ArrayList<String> nameList, int userChoice) throws FileNotFoundException {
+        Scanner scnr = new Scanner(System.in);
         if (userChoice == 1) {
             String studentName = "";
             do {
@@ -150,6 +152,7 @@ public class MainCalc {
         }
     }
     public static void choiceHandler(Student currentStudent, int userChoice) throws FileNotFoundException {
+        Scanner scnr = new Scanner(System.in);
         if (userChoice == 1)  {
             currentStudent.addCourse();
             getUserChoice(currentStudent);
