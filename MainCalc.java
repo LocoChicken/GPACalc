@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 public class MainCalc {
     public static ArrayList<String> nameList = new ArrayList<>();
-    public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
+    public static String directoryPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "Save Files" + System.getProperty("file.separator");
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner fileReader = new Scanner(new FileInputStream("studentNameList.txt"))) {
             while (fileReader.hasNextLine()) {

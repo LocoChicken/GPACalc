@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.File;
 
 public class Student {
-    public static String directoryPath = System.getProperty("user.dir") + "/Save Files/";
+    public static String directoryPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "Save Files" + System.getProperty("file.separator");
     private String studentName = "";
     private int numCourses = 0;
     private double numCredits = 0.0;
