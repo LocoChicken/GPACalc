@@ -91,7 +91,7 @@ public class MainCalc {
                 }
             }
             while(nameList.contains(studentName));
-            if (!studentName.equals("cancel")) {
+            if (!studentName.equals("cancel") && !nameList.contains(studentName)) {
                 Student createdStudent = createProfile(nameList, studentName);
                 printMainMenu(createdStudent);
                 getUserChoice(createdStudent);
@@ -106,7 +106,7 @@ public class MainCalc {
             do {
                 System.out.print("Enter a name (type \"cancel\" to cancel): ");
                 studentName = scnr.nextLine();
-                if (!studentName.equals("cancel")) {
+                if (!studentName.equals("cancel") && !nameList.contains(studentName)) {
                     System.out.println("Name not found.");
                 }
             }
@@ -126,7 +126,7 @@ public class MainCalc {
             do {
                 System.out.print("Choose a name to change (type \"cancel\" to cancel): ");
                 nameToChange = scnr.nextLine();
-                if (!nameToChange.equals("cancel")) {
+                if (!nameToChange.equals("cancel") && !nameList.contains(nameToChange)) {
                     System.out.println("Name not found.");
                 }
             }
@@ -150,7 +150,7 @@ public class MainCalc {
             do {
                 System.out.print("Choose a name to delete: ");
                 nameToDelete = scnr.nextLine();
-                if (!nameToDelete.equals("cancel")) {
+                if (!nameToDelete.equals("cancel") && !nameList.contains(nameToDelete)) {
                     System.out.println("Name not found.");
                 }
             }
