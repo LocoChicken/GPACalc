@@ -56,7 +56,7 @@ public class MainCalc {
                 done = true;
             }
             catch (InputMismatchException e) {
-                System.out.print(userChoice + " is an invalid input, enter a number: ");
+                System.out.print(userChoice + " is an invalid input, enter a number: \n");
                 scnr.nextLine();
             }
         }
@@ -73,7 +73,7 @@ public class MainCalc {
                 done = true;
             }
             catch (InputMismatchException e) {
-                System.out.print(userChoice + " is an invalid input, enter a number: ");
+                System.out.print(userChoice + " is an invalid input, enter a number: \n");
                 scnr.nextLine();
             }
         }
@@ -200,16 +200,20 @@ public class MainCalc {
             getUserChoice(currentStudent);
         }
         else if (userChoice == 5) {
-            System.out.print("Enter file name: ");
+            System.out.print("Enter file name (type \"cancel\" to cancel): ");
             String fileName = scnr.next();
-            currentStudent.importCoursesFromFile(fileName);
+            if (!fileName.equals("cancel")) {
+                currentStudent.importCoursesFromFile(fileName);
+            }
             getUserChoice(currentStudent);
 
         }
         else if (userChoice == 6) {
-            System.out.print("Enter file name: ");
+            System.out.print("Enter file name (type \"cancel\" to cancel): ");
             String fileName = scnr.next();
-            currentStudent.printCoursesToFile(fileName);
+            if (!fileName.equals("cancel")) {
+                currentStudent.printCoursesToFile(fileName);
+            }
             getUserChoice(currentStudent);
         }
         else if (userChoice == 7) {
